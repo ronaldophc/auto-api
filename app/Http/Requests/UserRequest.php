@@ -13,15 +13,6 @@ class UserRequest extends FormRequest
         return true;
     }
 
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'status' => false,
-            'message' => 'Validation error',
-            'errors' => $validator->errors()
-        ], 422));
-    }
-
     public function rules(): array
     {
         $userId = $this->route('user') ? $this->route('user')->id : null;
