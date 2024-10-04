@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('vehicle_id')->constrained()->onDelete('cascade');
             $table->string('image_url');
-            $table->boolean('is_cover')->default(false);
+            $table->boolean('is_cover')->nullable()->default(false);
             $table->timestamps();
         });
 

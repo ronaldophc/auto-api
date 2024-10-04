@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\StoreController;
+use App\Http\Controllers\Api\BusinessHourController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VehicleController;
 use App\Http\Controllers\Api\VehicleImageController;

@@ -44,11 +44,12 @@ class VehicleImageController extends Controller
 
             $path = $image->store('images', 'public');
             $vehicleId = $data['vehicle_id'];
+            $is_cover = filter_var($data['is_cover'], FILTER_VALIDATE_BOOLEAN);
 
             $image = VehicleImage::create([
                 'vehicle_id' => $vehicleId,
                 'image_url' => $path,
-                'is_cover' => $data['is_cover'] ?? false,
+                'is_cover' => $is_cover,
             ]);
 
             DB::commit();
