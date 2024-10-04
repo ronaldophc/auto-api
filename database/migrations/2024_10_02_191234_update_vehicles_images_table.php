@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vehicle_images', function (Blueprint $table) {
-            $table->string('is_cover')->nullable()->default(false)->change();
+        Schema::table('vehicle_images', function (Blueprint $table) {
+            $table->string('is_cover')->nullable()->change();
         });
     }
 

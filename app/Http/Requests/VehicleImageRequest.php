@@ -27,6 +27,7 @@ class VehicleImageRequest extends FormRequest
     {
         return [
             'vehicle_id' => 'required|exists:vehicles,id',
+            'image' => 'required|file',
             'is_cover' => 'boolean|nullable',
         ];
     }

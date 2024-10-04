@@ -36,18 +36,35 @@ class VehicleImageController extends Controller
 
         try {
             $data = $request->all();
+            $image = $request->file('image');
 
-            $image = VehicleImage::create($data);
+            if (!$image) {
+                throw new \Exception('No image file found in the request.');
+            }
+
+            $path = $image->store('images', 'public');
+            $vehicleId = $data['vehicle_id'];
+
+            $image = VehicleImage::create([
+                'vehicle_id' => $vehicleId,
+                'image_url' => $path,
+                'is_cover' => $data['is_cover'] ?? false,
+            ]);
+
             DB::commit();
+
             return response()->json([
                 'status' => true,
                 'data' => $image,
                 'message' => 'Image created',
             ], 201);
         } catch (\Exception $e) {
+
             DB::rollBack();
+
             return response()->json([
                 'status' => false,
+                'error' => 'error na controller',
                 'message' => $e
             ], 400);
         }

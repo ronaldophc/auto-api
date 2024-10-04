@@ -12,7 +12,7 @@ class VehicleController extends Controller
 {
     public function list(): JsonResponse
     {
-        $vehicles = Vehicle::orderBy('id', 'desc')->paginate(3);
+        $vehicles = Vehicle::orderBy('id', 'desc')->paginate(10);
         return response()->json([
             'status' => true,
             'data' => $vehicles
