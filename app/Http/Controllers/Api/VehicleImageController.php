@@ -20,14 +20,30 @@ class VehicleImageController extends Controller
         ], 200);
     }
 
-    public function show(): JsonResponse
+    public function show($vehicleId): JsonResponse
     {
-        $image = VehicleImage::find(request()->route('image'));
-        return response()->json([
-            'status' => true,
-            'data' => $image,
-            'image_url' => asset('storage/' . $image->image_url)
-        ], 200);
+        try {
+            $image = VehicleImage::query()
+                ->where('vehicle_id', $vehicleId)
+                ->where('is_cover', true)
+                ->first();
+
+            if (!$image) {
+                throw new \Exception('No cover image found for this vehicle.');
+            }
+
+            return response()->json([
+                'status' => true,
+                'data' => $image,
+                'image_url' => $image->image_url
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 404);
+        }
+
     }
 
     public function store(VehicleImageRequest $request): JsonResponse
@@ -42,11 +58,14 @@ class VehicleImageController extends Controller
                 throw new \Exception('No image file found in the request.');
             }
 
-            $path = $image->store('images', 'public');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            Storage::disk('images')->putFileAs('', $image, $imageName);
+            $path = 'images/' . $imageName;
+
             $vehicleId = $data['vehicle_id'];
             $is_cover = filter_var($data['is_cover'], FILTER_VALIDATE_BOOLEAN);
 
-            $image = VehicleImage::create([
+            $image = VehicleImage::query()->create([
                 'vehicle_id' => $vehicleId,
                 'image_url' => $path,
                 'is_cover' => $is_cover,

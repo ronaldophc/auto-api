@@ -12,13 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-
+        $middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function (Throwable $e) {
-            return response()->json([
-                'status' => false,
-                'message' => $e->getMessage(),
-            ], 500);
-        });
+
     })->create();

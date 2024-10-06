@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -48,35 +49,34 @@ class UserController extends Controller
     {
         $email = $request->email;
         $password = $request->password;
+
         if (!Auth::attempt(['email' => $email, 'password' => $password])) {
             return response()->json([
                 'status' => false,
                 'message' => 'Login ou senha incorreta'
             ], 404);
         }
-        $user = Auth::user();
-        $token = $user->createToken('token', ["*"], now()->addDay())->plainTextToken;
+
+        Auth::user();
         return response()->json([
             'status' => true,
-            'token' => $token
         ], 200);
     }
 
-    public function logout(Request $request): JsonResponse
+    public function logout(Request $request)
     {
-        try {
-            $request->user()->currentAccessToken()->delete();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Logout sucess'
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Logout error'
-            ], 400);
+        if (Auth::check()) {
+            // Invalida o token da sessão atual
+            Auth::guard('web')->logout();
+            // Invalida o cookie de sessão
+            $request->session()->invalidate();
+            // Regenera o token CSRF
+            $request->session()->regenerateToken();
+            return response()->json(['status' => true, 'message' => 'Logout realizado com sucesso.']);
         }
+
+        return response()->json(['status' => false, 'message' => 'User not found']);
+
     }
 
     public function store(UserRequest $request): JsonResponse
@@ -86,7 +86,7 @@ class UserController extends Controller
         try {
             $data = $request->all();
             $data['password'] = bcrypt($data['password']);
-            $user = User::create($data);
+            User::create($data);
             DB::commit();
             return response()->json([
                 'status' => true,

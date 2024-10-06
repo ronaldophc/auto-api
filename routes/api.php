@@ -26,8 +26,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/vehicles/{vehicle}', [VehicleController::class, 'destroy'])->name('vehicles.destroy')->middleware(EnsureVehicleExist::class); // Rota para deletar um veículo
     Route::get('/vehicles/{vehicle}/images', [VehicleImageController::class, 'list'])->middleware(EnsureVehicleExist::class)->name('vehicles.images.list'); // Rota para listar todas as imagens de um veículo
 
-    Route::delete('/vehicles/images/{id}', [VehicleImageController::class, 'destroy'])->name('vehicles.images.destroy'); // Rota para deletar uma imagem de um veículo
-    Route::get('/vehicles/images/{image}', [VehicleImageController::class, 'show'])->name('vehicles.images.show')->middleware(EnsureVehicleImageExist::class); // Rota para exibir uma imagem de um veículo
+    Route::delete('/vehicles/images/{image}', [VehicleImageController::class, 'destroy'])->name('vehicles.images.destroy')->middleware(EnsureVehicleImageExist::class); // Rota para deletar uma imagem de um veículo
+    Route::get('/vehicles/images/{vehicle}', [VehicleImageController::class, 'show'])->name('vehicles.images.show')->middleware(EnsureVehicleExist::class); // Rota para exibir a imagem capa do veículo
     Route::post('/vehicles/images', [VehicleImageController::class, 'store'])->name('vehicles.images.store'); // Rota para criar uma nova imagem de um veículo
 
     Route::get('/stores', [StoreController::class, 'list'])->name('stores.list'); // Rota para listar todas as lojas
