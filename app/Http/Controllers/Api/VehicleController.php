@@ -13,14 +13,14 @@ class VehicleController extends Controller
 {
     public function list(Request $request): JsonResponse
     {
-        $query = Vehicle::query();
+        $query = Vehicle::with('coverPhoto');
 
         // Aplicar filtros
-        if ($request->has('year_min') && $request->has('year_max')) {
+        if (isset($request->year_min) && isset($request->year_max)) {
             $query->whereBetween('model_year', [$request->year_min, $request->year_max]);
         }
 
-        if ($request->has('price_min') && $request->has('price_max')) {
+        if (isset($request->price_min) && isset($request->price_max)) {
             $query->whereBetween('price', [$request->price_min, $request->price_max]);
         }
 
@@ -30,17 +30,17 @@ class VehicleController extends Controller
             $query->whereBetween('current_km', [$kmMin, $kmMax]);
         }
 
-        if ($request->has('type')) {
+        if (isset($request->type)) {
             $query->where('type', $request->type);
         }
 
         // Ordenação
-        if ($request->has('order_by')) {
+        if (isset($request->order_by)) {
             $query->orderBy('price', $request->order_by);
         }
 
         // Paginação
-        if ($request->has('per_page')) {
+        if (isset($request->per_page)) {
             $vehicles = $query->paginate($request->per_page);
         } else {
             $vehicles = $query->get();
@@ -130,10 +130,10 @@ class VehicleController extends Controller
         $query = $request['query'];
 
         // Realiza a pesquisa no modelo
-        $results = Car::where('manufacturer', 'LIKE', "%{$query}%")
+        $results = Vehicle::where('manufacturer', 'LIKE', "%{$query}%")
             ->orWhere('model', 'LIKE', "%{$query}%");
 
-        if ($request->has('per_page')) {
+        if (isset($request->per_page)) {
             $vehicles = $results->paginate($request->per_page);
         } else {
             $vehicles = $results->get();

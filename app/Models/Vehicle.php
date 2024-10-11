@@ -35,4 +35,14 @@ class Vehicle extends Model
         'renavam',
         'store_id',
     ];
+
+    protected $casts = [
+        'is_new' => 'boolean',
+        'is_featured' => 'boolean',
+    ];
+
+    public function coverPhoto()
+    {
+        return $this->hasOne(VehicleImage::class);
+    }
 }
