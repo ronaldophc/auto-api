@@ -8,6 +8,7 @@ use App\Models\VehicleImage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class VehicleImageController extends Controller
 {
@@ -103,5 +104,18 @@ class VehicleImageController extends Controller
         return response()->json(null, 204);
     }
 
+    public function update(Request $request, $id): JsonResponse
+    {
+        $image = VehicleImage::findOrFail($id);
 
+        $data = $request->all();
+
+        $image->update($data);
+
+        return response()->json([
+            'status' => true,
+            'data' => $image,
+            'message' => 'Image updated',
+        ], 200);
+    }
 }

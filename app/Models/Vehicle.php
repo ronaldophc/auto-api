@@ -43,6 +43,6 @@ class Vehicle extends Model
 
     public function coverPhoto()
     {
-        return $this->hasOne(VehicleImage::class);
+        return $this->hasOne(VehicleImage::class)->where('is_cover', true);
     }
 }

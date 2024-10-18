@@ -15,4 +15,7 @@ class VehicleImage extends Model
         'is_cover',
     ];
 
+    protected $casts = [
+        'is_cover' => 'boolean',
+    ];
 }
