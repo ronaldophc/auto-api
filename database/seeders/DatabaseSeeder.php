@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Store;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,5 +22,18 @@ class DatabaseSeeder extends Seeder
             'password' => '12345',
         ]);
         User::factory()->count(50)->create();
+
+        Store::created([
+            "name" => "Auto Legend",
+            "logo" => "",
+            "address" => "Rua Castro 135",
+            "phone" => "(42) 984147386",
+            "whatsapp" => "(42) 984147386",
+            "instagram" => "teste",
+            "tiktok" => "teste",
+            "facebook" => "teste",
+            "google_maps" => "teste",
+            "email" => "ronaldo@gmail.com"
+        ]);
     }
 }
