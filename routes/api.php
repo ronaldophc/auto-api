@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/users/create', [UserController::class, 'store'])->name('users.store'); // Rota para criar um novo usuário
 Route::post('/users/login', [UserController::class, 'login'])->name('users.login'); // Rota para autenticar um usuário
+Route::post('/stores', [StoreController::class, 'store'])->name('stores.store'); // Rota para criar uma nova loja
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user', [UserController::class, 'user'])->name('users.user'); // Rota para listar todos os usuários
@@ -33,7 +34,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/stores', [StoreController::class, 'list'])->name('stores.list'); // Rota para listar todas as lojas
     Route::get('/stores/{store}', [StoreController::class, 'show'])->name('stores.show'); // Rota para exibir uma loja específica
-    Route::post('/stores', [StoreController::class, 'store'])->name('stores.store'); // Rota para criar uma nova loja
     Route::put('/stores/{store}', [StoreController::class, 'update'])->name('stores.update'); // Rota para atualizar uma loja
 
     Route::post('stores/hours', [BusinessHourController::class, 'store'])->name('stores.hours.store'); // Rota para criar um novo horário de atendimento
