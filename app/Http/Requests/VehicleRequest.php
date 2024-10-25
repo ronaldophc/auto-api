@@ -37,7 +37,7 @@ class VehicleRequest extends FormRequest
             'fuel_type' => 'string|nullable',
             'steering_type' => 'string|nullable',
             'transmission' => 'string|nullable',
-            'doors' => 'integer',
+            'doors' => 'integer|nullable',
             'license_plate' => 'nullable|string|unique:vehicles,license_plate,' . $vehichleId,
             'color' => 'string|nullable',
             'price' => 'required|numeric',

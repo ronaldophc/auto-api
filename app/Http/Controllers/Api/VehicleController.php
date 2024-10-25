@@ -15,19 +15,30 @@ class VehicleController extends Controller
     {
         $query = Vehicle::with('coverPhoto');
 
-        // Aplicar filtros
-        if (isset($request->year_min) && isset($request->year_max)) {
-            $query->whereBetween('model_year', [$request->year_min, $request->year_max]);
+        if (isset($request->year_max)) {
+            $query->where('model_year', '<=', $request->year_max);
         }
 
-        if (isset($request->price_min) && isset($request->price_max)) {
-            $query->whereBetween('price', [$request->price_min, $request->price_max]);
+        if (isset($request->year_min)) {
+            $query->where('model_year', '>=', $request->year_min);
         }
 
-        if (isset($request->km_min) && isset($request->km_max)) {
-            $kmMin = intval($request->km_min);
+        if (isset($request->price_max)) {
+            $query->where('price', '<=', $request->price_max);
+        }
+
+        if (isset($request->price_min)) {
+            $query->where('price', '>=', $request->price_min);
+        }
+
+        if (isset($request->km_max)) {
             $kmMax = intval($request->km_max);
-            $query->whereBetween('current_km', [$kmMin, $kmMax]);
+            $query->where('current_km', '<=', $kmMax);
+        }
+
+        if (isset($request->km_min)) {
+            $kmMin = intval($request->km_min);
+            $query->where('current_km', '>=', $kmMin);
         }
 
         if (isset($request->type)) {
