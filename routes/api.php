@@ -16,6 +16,7 @@ Route::get('/vehicles', [VehicleController::class, 'list'])->name('vehicles.list
 Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show'])->name('vehicles.show'); // Rota para exibir um veículo específico
 Route::get('/vehicles/{vehicle}/images', [VehicleImageController::class, 'list'])->middleware(EnsureVehicleExist::class)->name('vehicles.images.list'); // Rota para listar todas as imagens de um veículo
 Route::get('/vehicles/images/{vehicle}', [VehicleImageController::class, 'show'])->name('vehicles.images.show')->middleware(EnsureVehicleExist::class); // Rota para exibir a imagem capa do veículo
+Route::get('/stores/{store}/hours', [StoreController::class, 'hours'])->name('stores.hours'); // Rota para exibir os horários de funcionamento de uma loja
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user', [UserController::class, 'user'])->name('users.user'); // Rota para listar todos os usuários

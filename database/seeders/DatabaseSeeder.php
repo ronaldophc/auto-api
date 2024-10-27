@@ -23,5 +23,13 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory()->count(50)->create();
 
+        Store::create([
+            'name' => 'Test Store',
+            'address' => 'Jl. Test No. 1',
+            'phone' => '081234567890',
+            'whatsapp' => '081234567890',
+            'email' => '',
+            'hours' => '08:00 - 17:00',
+        ]);
     }
 }

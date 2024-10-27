@@ -26,5 +26,6 @@ class Store extends Model
         'facebook',
         'google_maps',
         'email',
+        'hours',
     ];
 }

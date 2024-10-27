@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('facebook')->nullable();
             $table->string('google_maps')->nullable();
             $table->string('email')->unique();
+            $table->string('hours');
             $table->timestamps();
         });
     }
