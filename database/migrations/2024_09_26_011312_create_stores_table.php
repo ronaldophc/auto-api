@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('logo')->nullable();
             $table->string('address');
             $table->string('phone');
             $table->string('whatsapp');

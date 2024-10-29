@@ -45,6 +45,14 @@ class VehicleController extends Controller
             $query->where('type', $request->type);
         }
 
+        if (isset($request->is_new)) {
+            $query->where('is_new', (bool) $request->is_new);
+        }
+
+        if (isset($request->is_featured)) {
+            $query->where('is_featured', (bool) $request->is_featured);
+        }
+
         // Ordenação
         if (isset($request->order_by)) {
             $query->orderBy('price', $request->order_by);

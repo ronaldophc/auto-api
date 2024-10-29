@@ -72,11 +72,4 @@ class StoreController extends Controller
         }
     }
 
-    public function hours(Store $store): JsonResponse
-    {
-        return response()->json([
-            'status' => true,
-            'data' => $store->hours
-        ], 200);
-    }
 }
