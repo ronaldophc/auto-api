@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('instagram')->nullable();
             $table->string('tiktok')->nullable();
             $table->string('facebook')->nullable();
-            $table->string('google_maps')->nullable();
+            $table->text('google_maps')->nullable();
             $table->string('email')->unique();
             $table->string('hours');
             $table->timestamps();

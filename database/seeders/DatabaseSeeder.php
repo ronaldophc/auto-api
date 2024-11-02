@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'ronaldo@gmail.com',
             'password' => '12345',
         ]);
-        User::factory()->count(50)->create();
 
         Store::create([
             'name' => 'Test Store',
