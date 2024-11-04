@@ -15,6 +15,11 @@ class VehicleController extends Controller
     {
         $query = Vehicle::with('coverPhoto');
 
+        if (isset($request->search)) {
+            $query->where('manufacturer', 'LIKE', "%{$request->search}%")
+                ->orWhere('model', 'LIKE', "%{$request->search}%");
+        }
+
         if (isset($request->year_max)) {
             $query->where('model_year', '<=', $request->year_max);
         }
@@ -45,11 +50,11 @@ class VehicleController extends Controller
             $query->where('type', $request->type);
         }
 
-        if (isset($request->is_new)) {
+        if (isset($request->is_new) && $request->is_new === 'true') {
             $query->where('is_new', (bool) $request->is_new);
         }
 
-        if (isset($request->is_featured)) {
+        if (isset($request->is_featured) && $request->is_featured === 'true') {
             $query->where('is_featured', (bool) $request->is_featured);
         }
 
